@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat <<EOF
+Sample s2i java base image.
+EOF

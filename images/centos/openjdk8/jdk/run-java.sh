@@ -130,6 +130,9 @@ get_java_options() {
   local dir=$(get_script_dir)
   local java_opts
   local debug_opts
+  if [ -z ${JAVA_OPTIONS} ]; then
+    JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m"
+  fi
   if [ -f "$dir/java-default-options" ]; then
     java_opts=$($dir/java-default-options)
   fi

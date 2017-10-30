@@ -130,9 +130,7 @@ get_java_options() {
   local dir=$(get_script_dir)
   local java_opts
   local debug_opts
-  if [ -z ${JAVA_OPTIONS} ]; then
-    JAVA_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m"
-  fi
+  local basic_java_options="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m"
   if [ -f "$dir/java-default-options" ]; then
     java_opts=$($dir/java-default-options)
   fi
@@ -140,7 +138,7 @@ get_java_options() {
     debug_opts=$($dir/debug-options)
   fi
   # Normalize spaces with awk (i.e. trim and elimate double spaces)
-  echo "${JAVA_OPTIONS} $(run_java_options) ${debug_opts} ${java_opts}" | awk '$1=$1'
+  echo "${basic_java_options} ${JAVA_OPTIONS} $(run_java_options) ${debug_opts} ${java_opts}" | awk '$1=$1'
 }
 
 # Read in a classpath either from a file with a single line, colon separated
